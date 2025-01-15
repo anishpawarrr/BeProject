@@ -22,7 +22,7 @@ class QuestionGenerator(Tool):
     def forward(self, keywords: str) -> str:
         # questions = []
         keywords = keywords.split(",")
-        client = InferenceClient(api_key="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")
+        client = InferenceClient(api_key=getenv("HF_LOGIN_TOKEN"))
         system_prompt = f'''Imagine yourself as an INTERVIEWER and your task is to ask 3 questions for user query, these 3 questions should be of different difficulty levels starting from intermediate to intermidiate-hard to hard.
         JUST GIVE THE QUESTIONS NOT ANSWERS.
         YOUR FINAL RESPONSE SHOULD BE IN THE FOLLOWING FORMAT: Q1, Q2, Q3
@@ -38,7 +38,7 @@ class QuestionGenerator(Tool):
                 ("user", f"{keyword}"),
             ]
             message = client.chat_completion(
-                model=getenv("MODEL_PHI"),
+                model=getenv("MODEL_MIXTRAL"),
                 messages=messages,
                 max_tokens=1000,
                 temperature=0.5,
