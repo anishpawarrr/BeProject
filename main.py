@@ -23,10 +23,10 @@ resume = '''
 Programming Languages: C++, Python, C#.
 RDBMS: MySQL.
 Core CS: DSA, DBMS, OS, OOP, CN.
-Cloud: Azure Functions, Azure Service Bus, AWS S3.
+DevTools: VS Code, Git, GitHub.
 Frameworks: .NET(WPF, ASP.NET), Flask, Streamlit.
 AI: Machine Learning - Scikit learn, Deep Learning - TensorFlow, Large Language Models.
-DevTools: VS Code, Git, GitHub.
+Cloud: Azure Functions, Azure Service Bus, AWS S3.
 '''
 
 # resume = extract_text_from_pdf()
