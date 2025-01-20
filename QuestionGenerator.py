@@ -2,6 +2,7 @@ from transformers import Tool
 from huggingface_hub import InferenceClient
 from os import getenv
 from dotenv import load_dotenv
+import json
 import re
 
 load_dotenv()
@@ -24,7 +25,7 @@ class QuestionGenerator(Tool):
         # questions = []
         keywords = keywords.split(",")
         client = InferenceClient(api_key=getenv("HF_LOGIN_TOKEN"))
-        system_prompt = '''Imagine yourself as an INTERVIEWER and your task is to ask 3 questions for user query, these 3 questions should be of different difficulty levels starting from intermediate to intermidiate-hard to hard.
+        system_prompt = '''Imagine yourself as an INTERVIEWER and your task is to ask 3 questions for user query, these 3 questions should be of different difficulty levels starting from intermediate to intermidiate-hard to hard and must be skill specific.
         JUST GIVE THE QUESTIONS NOT ANSWERS.
         YOUR FINAL RESPONSE SHOULD BE IN THE FOLLOWING FORMAT: {```<insert question1 here>```, ```<insert question2 here>```, ```<insert question3 here>```}
         eg. response: ```what is your name```, ```what are your hobbies```, ```where do you live```
@@ -36,8 +37,6 @@ class QuestionGenerator(Tool):
         '''
         
         print("=============generating questions==============")
-        with open("questions.json", "w") as f:
-            pass
         question_set = dict()
         for keyword in keywords:
             messages = [
@@ -63,12 +62,11 @@ class QuestionGenerator(Tool):
             #     for question in questions:
             #         f.write(f"{question}\n")
                 # f.write(f"{keyword}: \n{message.choices[0].message.content}\n\n")
+        with open("questions.json", "w") as f:
+            json.dump(question_set, f, indent=4)
         print("=============questions generated==============")
         return "Questions generated successfully"
     
     def __ExtractQuestions(self, text: str) -> str:
         questions = re.findall(r"```(.*?)```", text, re.DOTALL)
         return questions
-    
-qg = QuestionGenerator()
-qg.forward("RDBMS, python, AI")
