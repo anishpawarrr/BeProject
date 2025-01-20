@@ -2,6 +2,7 @@ from transformers import Tool
 from huggingface_hub import InferenceClient
 from os import getenv
 from dotenv import load_dotenv
+import re
 
 load_dotenv()
 class QuestionGenerator(Tool):
@@ -13,7 +14,7 @@ class QuestionGenerator(Tool):
     inputs = {
         "keywords": {"type": "string", "description": "keywords present in resume in string format seperated by comma"}
     }
-    input_type = "string"
+    # input_type = "string"
     outputs = { 
        "questions": {"type": "string", "description": "Questions generated from keywords in string format seperated by comma"}
     }
@@ -22,16 +23,22 @@ class QuestionGenerator(Tool):
     def forward(self, keywords: str) -> str:
         # questions = []
         keywords = keywords.split(",")
-        client = InferenceClient(api_key="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")
-        system_prompt = f'''Imagine yourself as an INTERVIEWER and your task is to ask 3 questions for user query, these 3 questions should be of different difficulty levels starting from intermediate to intermidiate-hard to hard.
+        client = InferenceClient(api_key=getenv("HF_LOGIN_TOKEN"))
+        system_prompt = '''Imagine yourself as an INTERVIEWER and your task is to ask 3 questions for user query, these 3 questions should be of different difficulty levels starting from intermediate to intermidiate-hard to hard.
         JUST GIVE THE QUESTIONS NOT ANSWERS.
-        YOUR FINAL RESPONSE SHOULD BE IN THE FOLLOWING FORMAT: Q1, Q2, Q3
-        DON'T ADD OTHER DETAILS, JUST GIVE THE FINAL ANSWER.
+        YOUR FINAL RESPONSE SHOULD BE IN THE FOLLOWING FORMAT: {```<insert question1 here>```, ```<insert question2 here>```, ```<insert question3 here>```}
+        eg. response: ```what is your name```, ```what are your hobbies```, ```where do you live```
+        refer to the above format and give the response. the above example is just for reference, you should give the questions based on the user query.
+        DON'T ADD OTHER DETAILS, JUST GIVE THE FINAL RESPONSE.
+        REMEMBER, YOU HAVE TO GIVE 3 QUESTIONS FOR EVERY USER QUERY.
+        Each question should be inside triple backticks (```). eg. ```sample question```
+        strictly stick to the format, each question must be inside triple backticks (```).
         '''
         
         print("=============generating questions==============")
-        with open("questions.txt", "w") as f:
+        with open("questions.json", "w") as f:
             pass
+        question_set = dict()
         for keyword in keywords:
             messages = [
                 ("system", system_prompt),
@@ -44,7 +51,24 @@ class QuestionGenerator(Tool):
                 temperature=0.5,
                 stream=False
             )
-            with open("questions.txt", "a") as f:
-                f.write(f"{keyword}: \n{message.choices[0].message.content}\n\n")
+            response = message.choices[0].message.content
+            print("Response: ", response)
+            questions = self.__ExtractQuestions(response)
+            if len(questions) != 0:
+                question_set[keyword] = questions
+
+            # with open("questions.txt", "a") as f:
+            #     f.write(f"{keyword}: \n")
+            #     print(len(questions))
+            #     for question in questions:
+            #         f.write(f"{question}\n")
+                # f.write(f"{keyword}: \n{message.choices[0].message.content}\n\n")
         print("=============questions generated==============")
         return "Questions generated successfully"
+    
+    def __ExtractQuestions(self, text: str) -> str:
+        questions = re.findall(r"```(.*?)```", text, re.DOTALL)
+        return questions
+    
+qg = QuestionGenerator()
+qg.forward("RDBMS, python, AI")

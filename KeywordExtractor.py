@@ -7,7 +7,7 @@ class KeywordExtractor(Tool):
     inputs = {
         "keywords": {"type": "string", "description": "keywords present in resume in string format strictly seperated by comma"}
     }
-    input_type = "string"
+    # input_type = "string"
     outputs = { 
         "keywords": {"type": "string", "description": "keywords present in resume in string format strictly seperated by comma"}
     }
