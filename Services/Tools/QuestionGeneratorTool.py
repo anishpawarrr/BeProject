@@ -1,6 +1,6 @@
 from transformers import Tool
 from huggingface_hub import InferenceClient
-from os import getenv
+from os import getenv, path
 from dotenv import load_dotenv
 import json
 import re
@@ -16,9 +16,9 @@ class QuestionGenerator(Tool):
         "keywords": {"type": "string", "description": "keywords present in resume in string format seperated by comma"}
     }
     # input_type = "string"
-    outputs = { 
-       "questions": {"type": "string", "description": "Questions generated from keywords in string format seperated by comma"}
-    }
+    # outputs = { 
+    #    "questions": {"type": "string", "description": "Questions generated from keywords in string format seperated by comma"}
+    # }
     output_type = "string"
 
     def forward(self, keywords: str) -> str:
@@ -62,7 +62,9 @@ class QuestionGenerator(Tool):
             #     for question in questions:
             #         f.write(f"{question}\n")
                 # f.write(f"{keyword}: \n{message.choices[0].message.content}\n\n")
-        with open("questions.json", "w") as f:
+
+        questions_file_path = path.join(path.dirname(__file__), "..","questions.json")
+        with open(questions_file_path, "w") as f:
             json.dump(question_set, f, indent=4)
         print("=============questions generated==============")
         return "Questions generated successfully"

@@ -22,8 +22,6 @@ class AnswerEvaluator(Tool):
     output_type = "string"
 
     def forward(self, question: str, answer: str) -> int:
-        # questions = []
-        # keywords = keywords.split(",")
 
         question = "Question:\n" + question
         answer = "Answer:\n" + answer
@@ -61,8 +59,8 @@ class AnswerEvaluator(Tool):
         score = self.__ExtractScore(response)
         print("Score: ", score)
         print("===========================================")
-        with open("evaluation.txt", "w") as f:
-            f.write(str(score))
+        # with open("evaluation.txt", "w") as f:
+        #     f.write(str(score))
         return score
         
     
@@ -72,7 +70,4 @@ class AnswerEvaluator(Tool):
         if match:
             return int(match.group(1))
         else:
-            try:
-                return int(response.split('```')[1][0])
-            except:
-                return 6
+            return int(response.split('```')[1][0])

@@ -1,46 +1,77 @@
-from transformers.agents import ReactJsonAgent
-from transformers import HfApiEngine
-from huggingface_hub import login
-from QuestionGenerator import QuestionGenerator
-from KeywordExtractor import KeywordExtractor
-from AnswerEvaluator import AnswerEvaluator
-from ExtractPdf import extract_text_from_pdf
-from dotenv import load_dotenv
-from os import getenv
+from Services.Utils.ExtractPdf import extract_text_from_pdf
+from Services.GenerateQuestions import GenerateQuestions
+from Services.EvaluateAnswer import EvaluateAnswer
+from flask import Flask, jsonify, request
 
 
-load_dotenv()
-LOGIN_TOKEN = getenv("HF_LOGIN_TOKEN")
-login(LOGIN_TOKEN)
+app = Flask(__name__)
 
-LLM = getenv("MODEL_PHI")
-llm_engine = HfApiEngine(model=LLM)
+@app.route("/")
+def root():
+    return jsonify({
+        "status": "success",
+        "message": "Server is Up and Running",
+        "data": "Server is Up and Running"
 
-tools = [KeywordExtractor(), QuestionGenerator()]
+    }), 200
 
-agent = ReactJsonAgent(tools=tools, llm_engine=llm_engine)
+@app.route("/generate-questions", methods=["POST"])
+def generate_questions():
+    data = request.get_json()
+    resume = data.get("resume", None)
 
-resume = '''
-Programming Languages: C++, Python, C#.
-RDBMS: MySQL.
-Core CS: DSA, DBMS, OS, OOP, CN.
-Frameworks: .NET(WPF, ASP.NET), Flask, Streamlit.
-AI: Machine Learning - Scikit learn, Deep Learning - TensorFlow, Large Language Models.
-'''
+    if resume is None:
+        return jsonify({
+            "status": "error",
+            "message": "Invalid request, missing 'resume' field",
+            "data": None
+        }), 400
+    
+    generator = GenerateQuestions()
+    result = generator.generate_questions(resume)
 
-## resume = extract_text_from_pdf()
+    if not result.status:
+        return jsonify({
+            "status": "error",
+            "message": result.message,
+            "data": None
+        }), 500
+    
+    return jsonify({
+        "status": "success",
+        "message": result.message,
+        "data": result.data
+    }), 200
+    
+@app.route("/evaluate-answer", methods=["POST"])
+def evaluate_answer():
+    data = request.get_json()
+    question = data.get("question", None)
+    answer = data.get("answer", None)
 
-result = agent.run(f'''Extract keywords using KeywordExtractor tool from resume: <<<{resume}>>> and generate questions from them by passing all extracted keywords to QuestionGenerator tool.''')
-print("---------------------------------------------------------")
-print(result)
-print("---------------------------------------------------------")
+    if question is None or answer is None:
+        return jsonify({
+            "status": "error",
+            "message": "Invalid request, missing 'question' or 'answer' field",
+            "data": None
+        }), 400
+    
+    evaluator = EvaluateAnswer()
+    result = evaluator.evaluate_answer(question, answer)
 
-# agent = ReactJsonAgent(tools=[AnswerEvaluator()], llm_engine=llm_engine)
+    if not result.status:
+        return jsonify({
+            "status": "error",
+            "message": result.message,
+            "data": None
+        }), 500
+    
+    return jsonify({
+        "status": "success",
+        "message": result.message,
+        "data": result.data
+    }), 200
 
-# question = "What is the purpose of the 'override' keyword in C# and under what circumstances would you use it?"
-# answer = "The override keyword in C# is used to provide a new implementation for a method, property, indexer, or event that is defined as virtual or abstract in a base class. It allows a derived class to modify or extend the behavior of the base class method. You use override when you need polymorphism, enabling the derived class to offer a specific implementation that differs from the base class. This is essential when inheriting from an abstract class, as you must implement its abstract methods, or when you want to change the behavior of a virtual method in the base class."
 
-# score = agent.run(f'''Assess the answer to the question: <<<{question}>>> and answer: <<<{answer}>>> using AnswerEvaluator tool.''')
-# print()
-# print()
-# print(score)
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0")
