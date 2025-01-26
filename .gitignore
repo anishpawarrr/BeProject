@@ -4,4 +4,6 @@ resume.pdf
 .env
 questions.json
 evaluation.txt
-ask.py
+tp.py
+request_server.py
+.gitignore
