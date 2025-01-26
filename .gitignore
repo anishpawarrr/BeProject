@@ -1,0 +1,7 @@
+__pycache__
+.venv
+resume.pdf
+.env
+questions.json
+evaluation.txt
+ask.py
