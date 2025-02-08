@@ -4,6 +4,7 @@ from os import getenv, path
 from dotenv import load_dotenv
 import json
 import re
+from ..Utils.llm_cache import LLMCache
 
 load_dotenv()
 class QuestionGenerator(Tool):
@@ -25,14 +26,17 @@ class QuestionGenerator(Tool):
         # questions = []
         keywords = keywords.split(",")
         client = InferenceClient(api_key=getenv("HF_LOGIN_TOKEN"))
+        llm_cache = LLMCache(cache_time_window=50)
         system_prompt = '''Imagine yourself as an INTERVIEWER and your task is to ask 3 questions for user query, these 3 questions should be of different difficulty levels starting from intermediate to intermidiate-hard to hard and must be skill specific.
         JUST GIVE THE QUESTIONS NOT ANSWERS.
         YOUR FINAL RESPONSE SHOULD BE IN THE FOLLOWING FORMAT: {```<insert question1 here>```, ```<insert question2 here>```, ```<insert question3 here>```}
         eg. response: ```what is your name```, ```what are your hobbies```, ```where do you live```
         refer to the above format and give the response. the above example is just for reference, you should give the questions based on the user query.
-        DON'T ADD OTHER DETAILS, JUST GIVE THE FINAL RESPONSE.
-        REMEMBER, YOU HAVE TO GIVE 3 QUESTIONS FOR EVERY USER QUERY.
-        Each question should be inside triple backticks (```). eg. ```sample question```
+        
+        Rules:
+        1. DON'T ADD OTHER DETAILS, JUST GIVE THE FINAL RESPONSE.
+        2. REMEMBER, YOU HAVE TO GIVE 3 QUESTIONS FOR EVERY USER QUERY.
+        3. Each question should be inside triple backticks (```). eg. ```sample question```
         strictly stick to the format, each question must be inside triple backticks (```).
         '''
         
@@ -43,6 +47,12 @@ class QuestionGenerator(Tool):
                 ("system", system_prompt),
                 ("user", f"{keyword}"),
             ]
+            response = llm_cache.get_response(keyword)
+            if response is not None:
+                questions = self.__ExtractQuestions(response)
+                if len(questions) != 0:
+                    question_set[keyword] = questions
+                    continue
             message = client.chat_completion(
                 model=getenv("MODEL_PHI"),
                 messages=messages,
@@ -51,6 +61,7 @@ class QuestionGenerator(Tool):
                 stream=False
             )
             response = message.choices[0].message.content
+            llm_cache.set_response(keyword, response)
             print("Response: ", response)
             questions = self.__ExtractQuestions(response)
             if len(questions) != 0:

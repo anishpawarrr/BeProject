@@ -3,6 +3,7 @@ from huggingface_hub import InferenceClient
 from os import getenv
 from dotenv import load_dotenv
 import re
+from ..Utils.llm_cache import LLMCache
 
 load_dotenv()
 class AnswerEvaluator(Tool):
@@ -21,10 +22,13 @@ class AnswerEvaluator(Tool):
     }
     output_type = "string"
 
-    def forward(self, question: str, answer: str) -> int:
+    def forward(self, question: str, answer: str, context: str = "") -> int:
 
+        context = context
         question = "Question:\n" + question
         answer = "Answer:\n" + answer
+
+        llm_cache = LLMCache(cache_time_window=50)
 
         client = InferenceClient(api_key=getenv("HF_LOGIN_TOKEN"))
         system_prompt = f'''Imagine yourself as an INTERVIEWER and your task is to first analyse the question and then assess the answer given by the user.
@@ -38,22 +42,35 @@ class AnswerEvaluator(Tool):
         
         print("=============Assessing Answer==============")
         print()
+        print("Context: ", context)
+        print()
         print("Question: ", question)
         print()
         print("Answer: ", answer)
         print()
+
+        user_query = f"{question}\n{answer}"
+
+        if context != "":
+            user_query = context + "\n" + user_query
+
         messages = [
             ("system", system_prompt),
-            ("user", f"{question}\n{answer}"),
+            ("user", user_query),
         ]
-        message = client.chat_completion(
-            model=getenv("MODEL_MIXTRAL"),
-            messages=messages,
-            max_tokens=1000,
-            temperature=0.5,
-            stream=False
-        )
-        response = message.choices[0].message.content
+        response = llm_cache.get_response(str(messages))
+
+        if response is None:
+
+            message = client.chat_completion(
+                model=getenv("MODEL_MIXTRAL"),
+                messages=messages,
+                max_tokens=1000,
+                temperature=0.5,
+                stream=False
+            )
+            response = message.choices[0].message.content
+            llm_cache.set_response(str(messages), response)
         print("=============Assessment Done==============")
         print("Response: ", response)
         score = self.__ExtractScore(response)

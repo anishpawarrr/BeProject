@@ -7,3 +7,4 @@ evaluation.txt
 tp.py
 request_server.py
 .gitignore
+Services/Utils/cache.json

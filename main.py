@@ -1,6 +1,7 @@
 from Services.Utils.ExtractPdf import extract_text_from_pdf
 from Services.GenerateQuestions import GenerateQuestions
 from Services.EvaluateAnswer import EvaluateAnswer
+from Services.FollowUp import FollowUp
 from flask import Flask, jsonify, request
 
 
@@ -71,6 +72,67 @@ def evaluate_answer():
         "message": result.message,
         "data": result.data
     }), 200
+
+@app.route("/follow-up-question", methods=["POST"])
+def get_follow_up_question():
+    data = request.get_json()
+    question = data.get("question", None)
+    answer = data.get("answer", None)
+
+    if question is None or answer is None:
+        return jsonify({
+            "status": "error",
+            "message": "Invalid request, missing 'question' or 'answer' field",
+            "data": None
+        }), 400
+    
+    follow_up = FollowUp()
+    result = follow_up.get_follow_up_question(question, answer)
+
+    if not result.status:
+        return jsonify({
+            "status": "error",
+            "message": result.message,
+            "data": None
+        }), 500
+    
+    return jsonify({
+        "status": "success",
+        "message": result.message,
+        "data": result.data
+    }), 200
+
+@app.route("/evaluate-follow-up-question", methods=["POST"])
+def asses_follow_up_question():
+    data = request.get_json()
+    question = data.get("question", None)
+    answer = data.get("answer", None)
+    follow_up_question = data.get("follow_up_question", None)
+    follow_up_answer = data.get("follow_up_answer", None)
+
+    if question is None or answer is None or follow_up_question is None or follow_up_answer is None:
+        return jsonify({
+            "status": "error",
+            "message": "Invalid request, missing 'question', 'answer', 'follow_up_question' or 'follow_up_answer' field",
+            "data": None
+        }), 400
+    
+    follow_up = FollowUp()
+    result = follow_up.asses_follow_up_question(question, answer, follow_up_question, follow_up_answer)
+
+    if not result.status:
+        return jsonify({
+            "status": "error",
+            "message": result.message,
+            "data": None
+        }), 500
+    
+    return jsonify({
+        "status": "success",
+        "message": result.message,
+        "data": result.data
+    }), 200
+
 
 
 if __name__ == "__main__":
