@@ -14,4 +14,5 @@ class KeywordExtractor(Tool):
     output_type = "string"
 
     def forward(self, keywords: str) -> str:
+        assert isinstance(keywords, str), f"Expected keywords to be of type string but got {type(keywords)}"
         return keywords

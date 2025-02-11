@@ -1,45 +1,45 @@
-from transformers import Tool
-from huggingface_hub import InferenceClient
 from os import getenv
-from dotenv import load_dotenv
 import re
+from dotenv import load_dotenv
 from ..Utils.llm_cache import LLMCache
+from ..Utils.llm import LLM
 
 load_dotenv()
-class AnswerEvaluator(Tool):
-    name = "AnswerEvaluator"
-    description = '''This tool is expert in assessing the answers of the user to the questions,
-                    This tool first analyses question, compares and assesses answer to the given question.
-                '''
+class AnswerEvaluator():
+    """
+    Class to evaluate the answer given by the user based on the question asked.
+    """
 
-    inputs = {
-        "question": {"type": "string", "description": "Question asked by the interviewer"},
-        "answer": {"type": "string", "description": "Answer given by the user"}
-    }
-    input_type = "string"
-    outputs = { 
-       "evaluation": {"type": "int", "description": "Evaluated result of the answer"}
-    }
-    output_type = "string"
-
-    def forward(self, question: str, answer: str, context: str = "") -> int:
-
-        context = context
+    def get_score(self, question: str, answer: str, context: str = "") -> int:
+        """
+        Assess the answer given by the user based on the question asked and the context.
+        Args:
+            question (str): The question asked by the interviewer.
+            answer (str): The answer given by the user.
+            context (str): The context / previous discussion of the question and answer.
+        Returns:
+            int: The score given to the answer based on the question asked.
+        """
         question = "Question:\n" + question
         answer = "Answer:\n" + answer
 
-        llm_cache = LLMCache(cache_time_window=50)
+        llm = LLM(model = getenv("MODEL_MIXTRAL"),
+                  max_tokens=1000,
+                  tempature=0.1,
+                  llm_cache=LLMCache(cache_time_window=50)
+                  )
 
-        client = InferenceClient(api_key=getenv("HF_LOGIN_TOKEN"))
-        system_prompt = f'''Imagine yourself as an INTERVIEWER and your task is to first analyse the question and then assess the answer given by the user.
+        system_prompt = '''Imagine yourself as an INTERVIEWER and your task is to first analyse the question and then assess the answer given by the user.
         You must give a score to the answer based on the question asked between range 0 to 10.
         Give you response delimited by triple backticks (```).
         eg.
-        response: ```6```
-        YOU MUST ALWAYS FOLLOW THE ABOVE FORMAT AND THE RESPONSE SHOULD BE A NUMBER BETWEEN 0 TO 10.
-        DON'T ADD OTHER DETAILS, JUST GIVE THE FINAL ANSWER.
+        response: ```6``` <ADDITIONAL COMMENTS>
+
+        Rules:
+        1. YOU MUST ALWAYS FOLLOW THE ABOVE FORMAT AND THE RESPONSE SHOULD BE A NUMBER BETWEEN 0 TO 10.
+        2. DON'T ADD ADDITIONAL INFORMATION BETWEEN TRIPLE BACKTICKS, ALWAYS FOLLOW THR FORMAT: ```INT```.
+        3. ALWAYS STICK TO THE FORMAT, OTHERWISE THE SYSTEM WILL NOT BE ABLE TO EVALUATE THE RESPONSE.
         '''
-        
         print("=============Assessing Answer==============")
         print()
         print("Context: ", context)
@@ -51,40 +51,30 @@ class AnswerEvaluator(Tool):
 
         user_query = f"{question}\n{answer}"
 
-        if context != "":
-            user_query = context + "\n" + user_query
+        response = llm.generate_response(system_prompt = system_prompt,
+                                         user_prompt = user_query,
+                                         context = context
+                                         )
 
-        messages = [
-            ("system", system_prompt),
-            ("user", user_query),
-        ]
-        response = llm_cache.get_response(str(messages))
+        score = self.__ExtractScore(response)
 
-        if response is None:
-
-            message = client.chat_completion(
-                model=getenv("MODEL_MIXTRAL"),
-                messages=messages,
-                max_tokens=1000,
-                temperature=0.5,
-                stream=False
-            )
-            response = message.choices[0].message.content
-            llm_cache.set_response(str(messages), response)
         print("=============Assessment Done==============")
         print("Response: ", response)
-        score = self.__ExtractScore(response)
         print("Score: ", score)
         print("===========================================")
-        # with open("evaluation.txt", "w") as f:
-        #     f.write(str(score))
+
         return score
-        
-    
+
     def __ExtractScore(self, response: str) -> int:
+        """
+        Regex operation to extract the score from the response.
+        Args:
+            response (str): The response from the model.
+        Returns:
+            int: The score extracted from the response.
+        """
         pattern = r'```(.*?)```'
         match = re.search(pattern, response)
         if match:
             return int(match.group(1))
-        else:
-            return int(response.split('```')[1][0])
+        return int(response.split('```')[1][0])
