@@ -1,3 +1,5 @@
+"""Common return DTO"""
+
 from pydantic import BaseModel
 
 class ReturnDTO(BaseModel):
