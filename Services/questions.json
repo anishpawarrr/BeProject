@@ -1,0 +1,22 @@
+{
+    "Education: \nPune Institute of Computer Technology, Savitribai Phule Pune University | Pune, India \n\u25cf Bachelor of Engineering - Information Technology 8.9 CGPA\n\u25cf Bachelor of Engineering - Honors in Data Science\n\n": [
+        "What motivated you to pursue both Bachelor of Engineering in Information Technology and Bachelor of Engineering Honors in Data Science, and how do you think these skills will benefit you in a role at Barclays?",
+        "Can you share an example of a project or academic work that showcases your ability to apply data analysis and problem-solving skills, which are essential for a data scientist role at Barclays?",
+        "How do you stay up-to-date with the latest advancements in the field of data science, and how do you think your understanding of emerging technologies such as AI and machine learning will enable you to make a positive impact at Barclays?"
+    ],
+    "Projects:\nContext-Aware Email Routing System - GenAI \n\u25cf An intelligent email classification system that analyzes content, context, and sentiment to route emails to the appropriate departments and individuals with an accuracy of 87%.\n\u25cf Enabled user feedback mechanism on email routing, ensuring adaptability to any organizational structure.\n\u25cf Implemented a scalable solution using Python, RabbitMQ, IMAP, SMTP, Haystack, Hugging Face, Mixtral 8x7B LLM, Retrieval Augmented Generation, and encryption for efficient processing, and secure routing.\n\nDriveSync - Process Automation \n\u25cf Used by 20+ production line machines to Synchronize code updates directly from a Google Drive folder, eliminating manual deployments on production line machines by 100% using .NET, C#, Python, Google Cloud Platform.\n\u25cf Designed a user-friendly interface for production line personnel that leverages Google Drive, multithreading, Depth First Search to minimize runtime and cloud resources.\n\n": [
+        "What motivated you to apply for a role at Barclays, considering your background in AI and automation?",
+        "How do you think your experience with GenAI and DriveSync can contribute to the development of innovative solutions that align with Barclays' goals and values?",
+        "Can you describe a situation where you had to handle sensitive or confidential information, and how you ensured its secure processing and routing, similar to the encryption and secure routing features in your GenAI project?",
+        "What do you know about Barclays' current projects and initiatives, and how do you think your skills and experience can help drive their success?",
+        "How do you stay up-to-date with the latest developments in AI, automation, and cybersecurity, and how do you think this will benefit Barclays in the future?",
+        "Can you walk me through your experience with large-scale systems and how you ensured scalability in your GenAI project, similar to the scalable solution you implemented for DriveSync?",
+        "How do you handle conflicting priorities and tight deadlines in a fast-paced environment, and can you give an example from your previous experience?",
+        "Can you describe your experience with collaborative tools and software, and how you think this will enable effective communication and teamwork in a Barclays team?"
+    ],
+    "Languages:\n\u25cf Python\n\n": [
+        "What motivated you to apply for a role at Barclays, and how do you think your skills in Python align with our business objectives?",
+        "Can you walk me through your experience with data analysis and visualization in Python, and how you would approach a project to extract insights from a large dataset for a Barclays business function?",
+        "How do you stay up-to-date with industry trends and developments, and how do you think you can contribute to Barclays' commitment to innovation and customer-centricity through your work in Python?"
+    ]
+}

@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - ./cache:/app/cache  # Mount a volume for cache data
+    env_file:
+      - .env  # Load environment variables from .env file
+    restart: unless-stopped
