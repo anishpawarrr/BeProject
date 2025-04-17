@@ -1,22 +1,56 @@
 {
-    "Education: \nPune Institute of Computer Technology, Savitribai Phule Pune University | Pune, India \n\u25cf Bachelor of Engineering - Information Technology 8.9 CGPA\n\u25cf Bachelor of Engineering - Honors in Data Science\n\n": [
-        "What motivated you to pursue both Bachelor of Engineering in Information Technology and Bachelor of Engineering Honors in Data Science, and how do you think these skills will benefit you in a role at Barclays?",
-        "Can you share an example of a project or academic work that showcases your ability to apply data analysis and problem-solving skills, which are essential for a data scientist role at Barclays?",
-        "How do you stay up-to-date with the latest advancements in the field of data science, and how do you think your understanding of emerging technologies such as AI and machine learning will enable you to make a positive impact at Barclays?"
+    "Education\n\u25cf Bachelor of Engineering - Information Technology \n\u25cf Bachelor of Engineering - Honors in Data Science\n\u25cf Bachelor of Engineering - Information Technology 8.9 CGPA\n": [
+        "What inspired you to pursue both Information Technology and Data Science, and how do you think your academic background will benefit you in a role at Barclays?",
+        "Can you walk me through a project where you applied data science concepts to solve a real-world problem, and how you think this skillset will contribute to Barclays' business objectives?",
+        "How do you stay up-to-date with the latest advancements in Information Technology and Data Science, and how do you think your strong academic record (8.9 CGPA) will enable you to make a positive impact in a fast-paced environment like Barclays?"
     ],
-    "Projects:\nContext-Aware Email Routing System - GenAI \n\u25cf An intelligent email classification system that analyzes content, context, and sentiment to route emails to the appropriate departments and individuals with an accuracy of 87%.\n\u25cf Enabled user feedback mechanism on email routing, ensuring adaptability to any organizational structure.\n\u25cf Implemented a scalable solution using Python, RabbitMQ, IMAP, SMTP, Haystack, Hugging Face, Mixtral 8x7B LLM, Retrieval Augmented Generation, and encryption for efficient processing, and secure routing.\n\nDriveSync - Process Automation \n\u25cf Used by 20+ production line machines to Synchronize code updates directly from a Google Drive folder, eliminating manual deployments on production line machines by 100% using .NET, C#, Python, Google Cloud Platform.\n\u25cf Designed a user-friendly interface for production line personnel that leverages Google Drive, multithreading, Depth First Search to minimize runtime and cloud resources.\n\n": [
-        "What motivated you to apply for a role at Barclays, considering your background in AI and automation?",
-        "How do you think your experience with GenAI and DriveSync can contribute to the development of innovative solutions that align with Barclays' goals and values?",
-        "Can you describe a situation where you had to handle sensitive or confidential information, and how you ensured its secure processing and routing, similar to the encryption and secure routing features in your GenAI project?",
-        "What do you know about Barclays' current projects and initiatives, and how do you think your skills and experience can help drive their success?",
-        "How do you stay up-to-date with the latest developments in AI, automation, and cybersecurity, and how do you think this will benefit Barclays in the future?",
-        "Can you walk me through your experience with large-scale systems and how you ensured scalability in your GenAI project, similar to the scalable solution you implemented for DriveSync?",
-        "How do you handle conflicting priorities and tight deadlines in a fast-paced environment, and can you give an example from your previous experience?",
-        "Can you describe your experience with collaborative tools and software, and how you think this will enable effective communication and teamwork in a Barclays team?"
+    "Experience\n\u25cf Cloud and Backend Developer Intern \n\u25cf Software Development Intern \n\u25cf Developed an AI-based Intelligent Document Processing system \n\u25cf Conducted comprehensive market research \n\u25cf Designed the product architecture \n\u25cf Utilized Azure cloud infrastructure \n\u25cf Updated Orchestra \n\u25cf Integrated it with AWS S3 \n\u25cf Developed a background process \n\u25cf Implemented a scalable solution \n\u25cf Enabled user feedback mechanism \n\u25cf Implemented a scalable solution \n\u25cf Used by 20+ production line machines \n\u25cf Designed a user-friendly interface \n\u25cf Eliminated manual deployments \n\u25cf Conducted comprehensive market research \n\u25cf Designed the product architecture \n\u25cf Utilized Azure cloud infrastructure \n\u25cf Implemented a scalable solution \n\u25cf Developed a background process \n\u25cf Implemented a scalable solution \n\u25cf Used by 20+ production line machines \n\u25cf Designed a user-friendly interface \n\u25cf Eliminated manual deployments \n\u25cf Conducted comprehensive market research \n\u25cf Designed the product architecture \n\u25cf Utilized Azure cloud infrastructure \n\u25cf Implemented a scalable solution \n\u25cf Developed a background process \n": [
+        "What motivated you to apply for a role at Barclays, and how do you think your skills and experience align with the company's goals and values?",
+        "Can you walk me through your experience with implementing scalable solutions, and how you ensured that your solutions were efficient and effective in a production environment like the one we have at Barclays?",
+        "How do you stay up-to-date with the latest developments in cloud computing and artificial intelligence, and how do you think these technologies can be applied to drive business growth and innovation at Barclays?"
     ],
-    "Languages:\n\u25cf Python\n\n": [
-        "What motivated you to apply for a role at Barclays, and how do you think your skills in Python align with our business objectives?",
-        "Can you walk me through your experience with data analysis and visualization in Python, and how you would approach a project to extract insights from a large dataset for a Barclays business function?",
-        "How do you stay up-to-date with industry trends and developments, and how do you think you can contribute to Barclays' commitment to innovation and customer-centricity through your work in Python?"
+    "Projects\n\u25cf Context-Aware Email Routing System \n\u25cf DriveSync \n\u25cf An intelligent email classification system \n\u25cf Enabled user feedback mechanism \n\u25cf Implemented a scalable solution \n\u25cf Used by 20+ production line machines \n\u25cf Designed a user-friendly interface \n\u25cf Eliminated manual deployments \n\u25cf Used by 20+ production line machines \n\u25cf Designed a user-friendly interface \n\u25cf Eliminated manual deployments \n\u25cf Used by 20+ production line machines \n\u25cf Designed a user-friendly interface \n\u25cf Eliminated manual deployments \n\u25cf Used by 20+ production line machines \n\u25cf Designed a user-friendly interface \n\u25cf Eliminated manual deployments \n": [
+        "What motivated you to apply for this role at Barclays, and how do you think your skills and experience align with the company's goals and values?",
+        "Can you walk me through your experience with designing and implementing scalable solutions, particularly in the context of industrial automation and machine-to-machine communication?",
+        "How do you think your work on projects like Context-Aware Email Routing System and DriveSync can be applied to a role in a financial services company like Barclays, and what skills do you think are most transferable?"
+    ],
+    "Certifications\nNone\n": [
+        "What inspired you to apply for a role at Barclays, and how do you think your skills and experience align with our business objectives?",
+        "Can you walk me through your experience working with customer data, and how you ensure the confidentiality and security of sensitive information in your previous roles?",
+        "How do you stay up-to-date with industry trends and developments, particularly in the areas of digital banking and financial services, and how do you think this knowledge could be applied in a Barclays role?"
+    ],
+    "Achievements\n\u25cf 87% accuracy \n\u25cf 100% reduction in manual deployments \n\u25cf Scalable solution \n\u25cf User feedback mechanism \n\u25cf Efficient processing \n\u25cf Secure routing \n\u25cf 20+ production line machines \n\u25cf Eliminated manual deployments \n\u25cf User-friendly interface \n\u25cf 8.9 CGPA \n": [
+        "What motivated you to apply for a job at Barclays, considering your academic achievements and technical skills?",
+        "How do you think your experience with scalable solutions and efficient processing can be applied to our fast-paced and dynamic IT environment at Barclays?",
+        "Can you explain how you would ensure the security and integrity of our production line machines, given your expertise in secure routing and user feedback mechanisms?"
+    ],
+    "Languages\nNone\n": [
+        "What motivated you to apply for a role at Barclays, and how do you think your skills align with the bank's goals?",
+        "Can you describe a time when you had to work with a team to achieve a difficult goal, and how you contributed to the outcome?",
+        "How do you stay up-to-date with industry trends and developments, and how do you think this will help you in your future role at Barclays?",
+        "Can you walk me through a situation where you had to handle a sensitive or confidential piece of information, and how you ensured its security?",
+        "How do you prioritize tasks and manage your workload in a fast-paced environment, and can you give an example of a time when you had to adapt to a changing situation?",
+        "What do you know about Barclays' values and culture, and how do you think you embody those qualities in your own work and personal life?",
+        "Can you describe a project or initiative you've worked on that you're particularly proud of, and what skills or accomplishments do you think were most relevant to its success?"
+    ],
+    "Awards\nNone\n": [
+        "What inspired you to apply for a role at Barclays, and how do you think your skills and experience align with our company's work?",
+        "Can you tell me about a time when you had to work under pressure to meet a tight deadline, and how you handled it?",
+        "How do you stay up-to-date with the latest developments and trends in our industry, and how do you think you can contribute to Barclays' continued success?",
+        "How do you think your skills and experience will enable you to support Barclays' commitment to diversity, equity, and inclusion, and what steps would you take to make a positive impact in this area?",
+        "Can you walk me through your experience with [specific Barclays product or service], and how you think it will benefit our customers?",
+        "What do you know about Barclays' culture, and how do you think you would fit in with our team's values and work environment?",
+        "How do you handle conflicting priorities and multiple projects simultaneously, and can you give an example of a time when you had to juggle competing demands?",
+        "Can you describe your experience with [specific Barclays technology or system], and how you think it will enable you to deliver results in your role?"
+    ],
+    "Publications\nNone\n": [
+        "What inspired you to apply for a role at Barclays, and how do you think your skills align with our business objectives?",
+        "Can you walk me through your previous work experience, highlighting any projects or achievements that demonstrate your ability to work in a fast-paced environment and maintain high levels of accuracy and attention to detail?",
+        "How do you stay up-to-date with industry trends and developments, and how do you think you can contribute to Barclays' ongoing commitment to innovation and customer satisfaction?"
+    ],
+    "Extracurricular activities\nNone\n": [
+        "What motivated you to apply for a role at Barclays, and how do you think your skills and experience align with the company's work?",
+        "Can you describe a situation where you had to work independently, and how you managed your time and priorities in such a scenario?",
+        "How do you stay updated with industry trends and developments, and how do you think your knowledge and skills will enable you to contribute to Barclays' success?"
     ]
 }

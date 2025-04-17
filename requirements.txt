@@ -2,3 +2,4 @@ huggingface_hub
 python-dotenv
 Flask
 pydantic
+gunicorn
