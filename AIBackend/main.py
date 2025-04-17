@@ -35,8 +35,6 @@ def generate_questions():
         data = request.args
 
     resume = data.get("resume", None)
-    company_name = data.get("company_name", "")
-    print("=========================================={}=====================================".format(company_name))
     
     if resume is None:
         return jsonify({
@@ -46,7 +44,7 @@ def generate_questions():
         }), 400
 
     generator = GenerateQuestions()
-    result = generator.generate_questions(resume, company_name)
+    result = generator.generate_questions(resume)
 
     if not result.status:
         return jsonify({
@@ -177,6 +175,4 @@ def asses_follow_up_question():
 
 
 if __name__ == "__main__":
-    # generator = GenerateQuestions()
-    # result = generator.generate_questions("Data Structures and Algorithms")
-    app.run(debug = True, host = "0.0.0.0", port = 5000)
+    app.run(debug = True, host = "0.0.0.0", port = 7000)

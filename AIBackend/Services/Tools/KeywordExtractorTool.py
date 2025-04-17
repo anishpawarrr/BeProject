@@ -1,6 +1,6 @@
-# from smolagents import Tool
+from transformers import Tool
 
-class KeywordExtractor():
+class KeywordExtractor(Tool):
     name = "KeywordExtractor"
     description = '''This tool is expert in extracting keywords, it STRICTLY gives results in the following format: ```JSON{{[keyword1, keyword2, ...]}}```'''
 

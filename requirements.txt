@@ -1,6 +1,7 @@
-transformers 
+# transformers 
 huggingface_hub
-torch
-pillow
-PyPDF2
+# torch
+# pillow
+# PyPDF2
 python-dotenv
+# smolagents

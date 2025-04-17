@@ -1,5 +1,5 @@
-# from smolagents import Tool
-# from huggingface_hub import InferenceClient
+from transformers import Tool
+from huggingface_hub import InferenceClient
 from os import getenv, path
 from dotenv import load_dotenv
 import json
@@ -8,7 +8,7 @@ from ..Utils.llm_cache import LLMCache
 from ..Utils.llm import LLM
 
 load_dotenv()
-class QuestionGenerator():
+class QuestionGenerator(Tool):
     name = "QuestionGenerator"
     description = '''This tool is expert in generating questions from keywords,
                     This tool asks questions for EVERY keyword present on 3 levels of difficulty starting from easy to intermediate to hard.
@@ -39,10 +39,7 @@ class QuestionGenerator():
         3. Each question should be inside triple backticks (```). eg. ```sample question```
         strictly stick to the format, each question must be inside triple backticks (```).
         '''
-
-        # auto job recommendation
-        # company specific questions
-
+        
         print("=============generating questions==============")
         question_set = dict()
         for keyword in keywords:

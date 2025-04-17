@@ -16,7 +16,7 @@ class LLM():
                  model: str = getenv("MODEL_PHI"),
                  max_tokens: int = 10000,
                  tempature: float = 0.1,
-                 llm_cache: LLMCache = LLMCache(cache_time_window=50)
+                 llm_cache: LLMCache = LLMCache()
                  ):
         """
         Constructor for the LLM class.
@@ -27,7 +27,7 @@ class LLM():
             tempature (float): Sampling temperature for generation.
             llm_cache (LLMCache): Cache object to store responses.
         """
-        self.__client = InferenceClient(api_key=getenv("TOGETHER"),provider="together")
+        self.__client = InferenceClient(api_key=getenv("HF_LOGIN_TOKEN"))
         self.__model = model
         self.__max_tokens = max_tokens
         self.__tempature = tempature
@@ -58,44 +58,39 @@ class LLM():
         assert isinstance(context, str), "Context should be a string."
         assert isinstance(cache_enabled, bool), "Cache enabled should be a boolean."
 
-        print("LLM: =============Generating Response==============")
-        print()
-        print("System Prompt: ", system_prompt)
-        print()
-        print("Context: ", context)
-        print()
-        print("User Prompt: ", user_prompt)
-        print()
+        # print("LLM: =============Generating Response==============")
+        # print()
+        # print("System Prompt: ", system_prompt)
+        # print()
+        # print("Context: ", context)
+        # print()
+        # print("User Prompt: ", user_prompt)
+        # print()
 
         if context != "":
             context = "Context:\n" + context + "\n"
 
         user_prompt = context + user_prompt
+
         messages = [
-            {
-                "role": "system",
-                "content": system_prompt
-            },
-            {
-                "role": "user",
-                "content": user_prompt
-            }
+            ("system", system_prompt),
+            ("user", user_prompt),
         ]
 
         messages_str = str(messages)
 
         response = self.__llm_cache.get_response(messages_str) if cache_enabled else None
 
-        if response is not None:
-            print()
-            print("Response from cache")
-            print()
+        # if response is not None:
+        #     print()
+        #     print("Response from cache")
+        #     print()
 
         if response is None:
 
-            print()
-            print("Response from model")
-            print()
+            # print()
+            # print("Response from model")
+            # print()
 
             message = self.__client.chat_completion(
                 model = self.__model,
@@ -108,17 +103,9 @@ class LLM():
             if cache_enabled:
                 self.__llm_cache.set_response(messages_str, response)
 
-        print("LLM: =============Response Generated==============")
-        print("Response: ", response)
-        print()
-        print("LLM: =============================================")
-        print()
+        # print("LLM: =============Response Generated==============")
+        # print("Response: ", response)
+        # print()
+        # print("LLM: =============================================")
+        # print()
         return response
-
-
-# llm = LLM()
-# sys = "you are good coder"
-# user = "write a code to add two numbers"
-# context = "you are a good coder"
-# response = llm.generate_response(user_prompt=user, system_prompt=sys, context=context)
-# print("Response: ", response)

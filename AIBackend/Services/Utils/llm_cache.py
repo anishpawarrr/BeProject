@@ -100,8 +100,8 @@ class LLMCache():
             value (str): response to store in the cache
         """
 
-        # assert isinstance(key, str), "Messages should be of type str, do: str(messages)"
-        # assert isinstance(value, str), "Response should be of type str"
+        assert isinstance(key, str), "Messages should be of type str, do: str(messages)"
+        assert isinstance(value, str), "Response should be of type str"
 
         current_time = self.__get_current_time()
         valid_time = self.__add_minutes_to_timestamp(current_time)
